@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Academic Learning Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        nav:hover {
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            padding: 0.5rem 1rem;
+            letter-spacing: 3px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #fff, #888);
+            transition: width 0.4s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0;
+            transition: transform 0.3s ease;
+        }
+
+        nav ul li:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            font-weight: 600;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropbtn {
+            font-size: 16px;
+            border: 2px solid transparent;
+            background: transparent;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .dropbtn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 200px;
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+            z-index: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.3s ease;
+            margin-top: 10px;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid white;
+            padding-left: 30px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+      
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 3px solid #000;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-welcome {
+            background: #000;
+            color: white;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-welcome::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .login-welcome h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .login-welcome p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-icon {
+            margin-bottom: 1rem;
+        }
+
+        .welcome-icon img {
+            width: 160px;
+            animation: floatUpDown 3s ease-in-out infinite;
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .login-form-section {
+            padding: 3rem;
+            background: white;
+        }
+
+        .login-form-section h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        .login-form-section p {
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #000;
+            background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle input {
+            padding-right: 3rem;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem 3rem;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover {
+            background: #333;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #555;
+        }
+
+        .signup-link a {
+            color: #000;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        .error-message {
+            display: none;
+            background: #ff4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message.show,
+        .error-message.show {
+            display: block;
+        }
+
+   
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    
+        footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+                font-size: 24px;
+            }
+
+            .logo img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-welcome {
+                padding: 2rem;
+            }
+
+            .login-welcome h2 {
+                font-size: 2rem;
+            }
+
+            .welcome-icon img {
+                width: 120px;
+            }
+
+            .login-form-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    
+    <nav>
+        <div class="logo" onclick="window.location.href='index.html'">
+           
+            ACADEMIC
+        </div>
+        
+    </nav>
+
+    
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-welcome">
+                <div class="welcome-icon">
+                    <img src="FOTO/logo.png" alt="Logo">
+                </div>
+                <h2>SELAMAT DATANG</h2>
+                <p>Masuk ke Academic Learning Center untuk mengakses berbagai materi pembelajaran berkualitas dan meningkatkan prestasi akademik Anda.</p>
+            </div>
+
+            <div class="login-form-section">
+                <h3>Login</h3>
+                <p>Masukkan kredensial Anda untuk melanjutkan</p>
+
+                <div id="successMessage" class="success-message">
+                    ✓ Login berhasil! Mengalihkan ke halaman utama...
+                </div>
+
+                <div id="errorMessage" class="error-message">
+                    ❌ Email atau password salah. Silakan coba lagi.
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="nama@email.com">
+                    </div>
+
+                    <div class="form-group password-toggle">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Masukkan password Anda">
+                        <button type="button" id="togglePassword" class="toggle-btn">👁️</button>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <span>Ingat Saya</span>
+                        </label>
+                        <a href="#" class="forgot-password">Lupa Password?</a>
+                    </div> 
+
+                        <button type="submit" class="login-btn">Masuk</button>
+
+                    
+
+                    <div class="signup-link">
+                        Belum punya akun? <a href="sign.html">Daftar Sekarang</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Toggle Password Visibility
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('password');
+
+togglePassword.addEventListener('click', function() {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    
+    // Change icon based on visibility
+    this.textContent = type === 'password' ? '👁️' : '🙈';
+});
+
+// Handle Form Submission
+const loginForm = document.getElementById('loginForm');
+const loadingOverlay = document.getElementById('loadingOverlay');
+const successMessage = document.getElementById('successMessage');
+const errorMessage = document.getElementById('errorMessage');
+
+loginForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+    
+    // Get form values
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const remember = document.getElementById('remember').checked;
+    
+    // Hide any previous messages
+    successMessage.classList.remove('show');
+    errorMessage.classList.remove('show');
+    
+    // Show loading overlay
+    loadingOverlay.classList.add('show');
+    
+    // Simulate login validation (replace with actual authentication)
+    setTimeout(() => {
+        // Simple validation - you should replace this with actual authentication
+        if (email && password) {
+            // Hide loading
+            loadingOverlay.classList.remove('show');
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Save login state if "Remember Me" is checked
+            if (remember) {
+                localStorage.setItem('rememberedEmail', email);
+                localStorage.setItem('isLoggedIn', 'true');
+            } else {
+                sessionStorage.setItem('isLoggedIn', 'true');
+            }
+            
+            // Save user info
+            sessionStorage.setItem('userEmail', email);
+            
+            // Redirect to index.html after 1.5 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        } else {
+            // Hide loading
+            loadingOverlay.classList.remove('show');
+            
+            // Show error message
+            errorMessage.classList.add('show');
+            
+            // Hide error after 3 seconds
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 3000);
+        }
+    }, 1000); // Simulate network delay
+});
+
+// Auto-fill email if remembered
+window.addEventListener('DOMContentLoaded', function() {
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    if (rememberedEmail) {
+        document.getElementById('email').value = rememberedEmail;
+        document.getElementById('remember').checked = true;
+    }
+    
+    // Check if already logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+        // Optional: Auto-redirect if already logged in
+        // window.location.href = 'index.html';
+    }
+});
+
+// Forgot Password Handler
+document.querySelector('.forgot-password').addEventListener('click', function(e) {
+    e.preventDefault();
+    alert('Fitur reset password akan segera tersedia. Silakan hubungi admin di Academic@gmail.com');
+});
+
+// Add input validation styling
+const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+inputs.forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+            this.style.borderColor = '#ff4444';
+        } else {
+            this.style.borderColor = '#4CAF50';
+        }
+    });
+    
+    input.addEventListener('focus', function() {
+        this.style.borderColor = '#000';
+    });
+});
+
+// Email validation
+const emailInput = document.getElementById('email');
+emailInput.addEventListener('input', function() {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailPattern.test(this.value)) {
+        this.style.borderColor = '#4CAF50';
+    } else if (this.value.length > 0) {
+        this.style.borderColor = '#ff4444';
+    }
+});
+
+// Password strength indicator (optional)
+const passwordInputField = document.getElementById('password');
+passwordInputField.addEventListener('input', function() {
+    const password = this.value;
+    if (password.length >= 8) {
+        this.style.borderColor = '#4CAF50';
+    } else if (password.length > 0) {
+        this.style.borderColor = '#FFA500';
+    }
+});
+
+// Prevent multiple form submissions
+let isSubmitting = false;
+loginForm.addEventListener('submit', function(e) {
+    if (isSubmitting) {
+        e.preventDefault();
+        return false;
+    }
+    isSubmitting = true;
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+        isSubmitting = false;
+    }, 3000);
+});
+    </script>    
+
+   
+</body>
+</html>
